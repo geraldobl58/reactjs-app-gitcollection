@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FiChevronRight } from 'react-icons/fi';
 
@@ -17,9 +17,24 @@ export type GithubRepositoryProps = {
 };
 
 export const Dashboard: React.FC = () => {
-  const [repository, setRepository] = useState<GithubRepositoryProps[]>([]);
+  const [repository, setRepository] = useState<GithubRepositoryProps[]>(() => {
+    const storageRepos = localStorage.getItem('@GitCollection:repositories');
+
+    if (storageRepos) {
+      return JSON.parse(storageRepos);
+    }
+
+    return [];
+  });
   const [newRepository, setNewRepository] = useState('');
   const [inputError, setInputError] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@GitCollection:repositories',
+      JSON.stringify(repository),
+    );
+  }, [repository]);
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setNewRepository(event.target.value);
