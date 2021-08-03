@@ -24,6 +24,10 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
+  body, input, textarea, select, button {
+    font: 400 1rem 'Georama', sans-serif;
+  }
+
   #root {
     max-width: 960px;
     margin: 0 auto;
