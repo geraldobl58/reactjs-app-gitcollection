@@ -7,7 +7,6 @@ import { api } from '../../services/api';
 import { Header, RepoInfo, Issues } from './styles';
 
 import logo from '../../assets/logo.svg';
-import {} from 'react';
 
 export type RepositoryProps = {
   repository: string;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FiChevronRight } from 'react-icons/fi';
@@ -30,6 +30,7 @@ export const Dashboard: React.FC = () => {
   });
   const [newRepository, setNewRepository] = useState('');
   const [inputError, setInputError] = useState('');
+  const formEl = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     localStorage.setItem(
@@ -52,14 +53,20 @@ export const Dashboard: React.FC = () => {
       return;
     }
 
-    const response = await api.get<GithubRepositoryProps>(
-      `/repos/${newRepository}`,
-    );
+    try {
+      const response = await api.get<GithubRepositoryProps>(
+        `/repos/${newRepository}`,
+      );
 
-    const repositories = response.data;
+      const repositories = response.data;
 
-    setRepository([...repository, repositories]);
-    setNewRepository('');
+      setRepository([...repository, repositories]);
+      formEl.current?.reset();
+      setNewRepository('');
+      setInputError('');
+    } catch {
+      setInputError('reposiório não encontrado!');
+    }
   }
 
   return (
@@ -67,7 +74,11 @@ export const Dashboard: React.FC = () => {
       <img src={logo} alt="GitCollection" />
       <Title>Catálogo de repositórios do Github</Title>
 
-      <Form onSubmit={handleAddRepository} hasError={Boolean(inputError)}>
+      <Form
+        ref={formEl}
+        onSubmit={handleAddRepository}
+        hasError={Boolean(inputError)}
+      >
         <input
           placeholder="username/repository_name"
           onChange={handleInputChange}
