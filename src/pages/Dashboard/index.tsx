@@ -18,7 +18,7 @@ export type GithubRepositoryProps = {
   };
 };
 
-export const Dashboard: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [repository, setRepository] = useState<GithubRepositoryProps[]>(() => {
     const storageRepos = localStorage.getItem('@GitCollection:repositories');
 

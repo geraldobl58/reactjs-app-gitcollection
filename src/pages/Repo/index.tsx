@@ -33,7 +33,7 @@ export type RepoIssues = {
   };
 };
 
-export const Repo: React.FC = () => {
+const Repo: React.FC = () => {
   const [repository, setRepository] = useState<RepoProps | null>(null);
   const [issues, setIssues] = useState<RepoIssues[]>([]);
 
