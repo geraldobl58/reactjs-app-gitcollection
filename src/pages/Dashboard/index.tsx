@@ -89,8 +89,11 @@ export const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
 
       <Repos>
-        {repository.map(repo => (
-          <Link to={`/repositories/${repo.full_name}`} key={repo.full_name}>
+        {repository.map((repo, index) => (
+          <Link
+            to={`/repositories/${repo.full_name}`}
+            key={repo.full_name + index}
+          >
             <img src={repo.owner.avatar_url} alt={repo.owner.login} />
             <div>
               <strong>{repo.full_name}</strong>
